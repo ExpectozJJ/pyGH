@@ -18,6 +18,8 @@ Upgrading via `pip install --upgrade pyGH`
 ## Package Requirement
 
 * [NumPy](https://github.com/numpy/numpy)
+* [SciPy](https://github.com/scipy/scipy)
+* [Matplotlib](https://github.com/matplotlib/matplotlib)
 
 ## Simple Example
 
