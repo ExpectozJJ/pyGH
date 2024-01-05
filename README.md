@@ -1,5 +1,5 @@
 [![PyPI version](https://badge.fury.io/py/pyGH.svg)](https://badge.fury.io/py/pyGH)
-[![Downloads](https://pepy.tech/badge/generalisedformanricci)](https://pepy.tech/project/generalisedformanricci)
+[![Downloads](https://pepy.tech/badge/pygh)](https://pepy.tech/project/pygh)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
 ![Azure](https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/pygh-feedstock?branchName=master)
 
