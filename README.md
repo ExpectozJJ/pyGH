@@ -6,33 +6,6 @@
 # pyGH
 A Python tool to compare protein structures using Gromov-Hausdorff ultrametrics. The implementation is adapted from the MATLAB code in https://arxiv.org/abs/1912.00564. Here, we apply pyGH to distinguish between different protein conformers and different types of organic-inorganic halide perovskites. 
 
-## Installation via conda-forge
-
-[![Anaconda-Server Badge](https://img.shields.io/badge/install%20with%20-conda--forge-blue)](https://anaconda.org/conda-forge/generalisedformanricci)
-![Conda (channel only)](https://img.shields.io/conda/vn/conda-forge/generalisedformanricci)
-![Conda](https://img.shields.io/conda/dn/conda-forge/generalisedformanricci?color=green)
-![Conda](https://img.shields.io/conda/pn/conda-forge/generalisedformanricci?color=red)
-
-Installing `pygh` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
-
-```
-conda config --add channels conda-forge
-```
-
-Once the `conda-forge` channel has been enabled, `pygh` can be installed with:
-
-```
-conda install pygh
-```
-
-It is possible to list all of the versions of `pygh` available on your platform with:
-
-```
-conda search pygh --channel conda-forge
-```
-
-Alternatively, `pygh` can be installed just by `conda install -c conda-forge generalisedformanricci`.
-
 ## Installation via pip
 
 ![PyPI](https://img.shields.io/pypi/v/pygh)
