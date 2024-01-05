@@ -1,2 +1,2 @@
 # pyGH
-Python Package to compute Gromov-Hausdorff ultrametrics
+A Python tool to compute Gromov-Hausdorff ultrametrics
