@@ -21,7 +21,7 @@ from scipy.cluster import hierarchy
 import matplotlib.transforms as transforms
 from scipy.cluster.hierarchy import ClusterWarning
 from warnings import simplefilter
-from GH import uGH
+from pyGH.GH import uGH
 import sys 
 simplefilter("ignore", ClusterWarning)
 
