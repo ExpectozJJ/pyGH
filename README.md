@@ -1,2 +1,2 @@
 # pyGH
-A Python tool to compute Gromov-Hausdorff ultrametrics
+A Python tool to compare protein structures using Gromov-Hausdorff ultrametrics
