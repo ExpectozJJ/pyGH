@@ -24,7 +24,7 @@ Upgrading via `pip install --upgrade pyGH`
 ## Simple Example
 
 ```
-from pyGH import uGH, plot_uGH
+from pyGH.GH import uGH, plot_uGH
 
 ux = np.array([[ 0, 5.0225,    5.4539,    4.8977,    5.3575],
     [5.0225,         0,    5.2971,    5.4132,    5.2084],
