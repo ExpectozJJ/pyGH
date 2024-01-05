@@ -1,5 +1,5 @@
 import numpy as np 
-from GH import uGH
+from pyGH.GH import uGH
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 def GHM(all_eigval, all_eigvec):
