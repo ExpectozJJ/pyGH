@@ -1,5 +1,7 @@
 import numpy as np 
 from GH import uGH
+from scipy.sparse import *
+from scipy import *
 from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
 from mpl_toolkits.axes_grid1 import make_axes_locatable
