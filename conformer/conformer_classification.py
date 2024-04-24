@@ -1,10 +1,15 @@
+import gudhi as gd
 import numpy as np 
-from GH import uGH
+from pyGH.GH import uGH
 from scipy.sparse import *
 from scipy import *
 from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
+import matplotlib as mpl
+from matplotlib import pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
+import ot
+
 
 def faces(simplices):
     faceset = set()
@@ -120,7 +125,7 @@ feat = np.zeros((63, 342))
 i = 0
 for cat in ['5_i', '61_i', '262_vi', '230_i', '99_vi']:#, '230_i']:
     for kk in iidx[cat]:
-        file = open("./GH/{}/{}.xyz".format(cat, kk), 'r')
+        file = open("./{}/{}.xyz".format(cat, kk), 'r')
         contents = file.readlines()
         data = []
         for ii in range(2, len(contents)):
@@ -153,14 +158,14 @@ all_eigvec = []
 all_M = []
 for cat in ['5_i', '61_i', '262_vi', '230_i', '99_vi']:#, '230_i']:
     for kk in iidx[cat]:
-        file = open("./GH/{}/{}.xyz".format(cat, kk), 'r')
+        file = open("./{}/{}.xyz".format(cat, kk), 'r')
         contents = file.readlines()
         data = []
         for ii in range(2, len(contents)):
             line = contents[ii].split()
             data.append([float(line[1]), float(line[2]), float(line[3])])
         #print(data)
-        rc = gd.RipsComplex(data, max_edge_length=2)
+        rc = gd.RipsComplex(points = data, max_edge_length=2)
         simplex_tree = rc.create_simplex_tree(max_dimension=2)
         val = list(simplex_tree.get_filtration())
         simplices = set()

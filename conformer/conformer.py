@@ -1,8 +1,13 @@
 import numpy as np 
-from GH import uGH
+import gudhi as gd
+from pyGH.GH import uGH
 from scipy.sparse import *
 from scipy import *
+import matplotlib as mpl
+from matplotlib import pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
+import ot
+
 
 def faces(simplices):
     faceset = set()
@@ -106,7 +111,7 @@ def WM(all_eigval, all_eigvec, all_M):
         wm.append(dx)
     return wm
 
-file = open("./catalyst_feat/0.xyz", 'r')
+file = open("./0.xyz", 'r')
 
 contents = file.readlines()
 data = []
@@ -117,6 +122,8 @@ for i in range(2, len(contents)):
 
 all_eigval, all_eigvec, all_graphs = [], [], []
 all_ex, all_vx = [], []
+all_M = []
+
 #all_eigval, all_eigvec = [], []
 #rc = gd.AlphaComplex(coords)
 #simplex_tree = rc.create_simplex_tree()
@@ -124,7 +131,7 @@ all_ex, all_vx = [], []
 #print(val)
 for f in np.round(np.arange(0, 7.1, 0.2), 1):
     print(f)
-    rc = gd.RipsComplex(data, max_edge_length=f)
+    rc = gd.RipsComplex(points = data, max_edge_length=f)
     simplex_tree = rc.create_simplex_tree(max_dimension=2)
     val = list(simplex_tree.get_filtration())
     simplices = set()
@@ -132,6 +139,21 @@ for f in np.round(np.arange(0, 7.1, 0.2), 1):
         #print(v)
         #if np.sqrt(v[1])*2 <= f:
         simplices.add(tuple(v[0]))
+        
+    edges = list(n_faces(simplices,1))
+    pts = np.array(data)
+    M = np.zeros((len(edges), len(edges)))
+    for i in range(len(M)):
+        for j in range(i):
+            e1 = edges[i]; e2 = edges[j]
+            if e1[0] == e2[0] or e1[0] == e2[1] or e1[1] == e2[0] or e1[1] == e2[1]:
+                M[i,j] = 0
+            else:
+                tmp = [np.linalg.norm(pts[e1[0]]-pts[e2[0]]), np.linalg.norm(pts[e1[1]]-pts[e2[0]]), np.linalg.norm(pts[e1[0]]-pts[e2[1]]), np.linalg.norm(pts[e1[1]]-pts[e2[1]])]
+                M[i,j] = np.min(tmp)
+
+    M += np.transpose(np.tril(M))
+  
     
     #edge_idx = list(n_faces(simplices,1))
     #vert_idx = list(n_faces(simplices,0))
@@ -155,6 +177,9 @@ for f in np.round(np.arange(0, 7.1, 0.2), 1):
     #print(eigval)
     all_eigval.append(eigval)
     all_eigvec.append(eigvec)
+    all_M.append(M)
+
+
 all_sx = [all_vx, all_ex]
 #h1 = nx.cycle_basis(G)
 
