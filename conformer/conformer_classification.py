@@ -125,17 +125,20 @@ feat = np.zeros((63, 342))
 i = 0
 for cat in ['5_i', '61_i', '262_vi', '230_i', '99_vi']:#, '230_i']:
     for kk in iidx[cat]:
+        print(cat, kk)
         file = open("./{}/{}.xyz".format(cat, kk), 'r')
         contents = file.readlines()
         data = []
         for ii in range(2, len(contents)):
             line = contents[ii].split()
             data.append([float(line[1]), float(line[2]), float(line[3])])
+
+        file.close()
         feat[i, :len(data)*3] = np.reshape(data, (len(data)*3,))
+        i+= 1
 
-np.shape(feat)
-
-values = TSNE(n_components=2, verbose=2).fit_transform(feat)
+print(feat)
+values = TSNE(n_components=2, verbose=2, perplexity=25, learning_rate=200, init="random").fit_transform(feat)
 
 mpl.rcdefaults()
 mpl.rcParams['axes.spines.right'] = False
@@ -144,7 +147,6 @@ plt.figure(figsize=(5,5), dpi=200)
 plt.scatter(values[:13,0], values[:13,1], marker='.', color='tab:blue', alpha=0.75, linewidth=.5, s=50, label="Br-Cubic")
 plt.scatter(values[13:20,0], values[13:20,1], marker='.', color='tab:orange', alpha=0.75,  linewidth=0.5, s=50, label="Br-Ortho")
 plt.scatter(values[20:29,0], values[20:29,1], marker='.', color='tab:green', alpha=0.75,  linewidth=0.5, s=50, label="Br-Tetra")
-
 plt.scatter(values[29:49,0], values[29:49,1], marker='.', color='tab:red', alpha=0.75,  linewidth=0.5, s=50, label="Cl-Cubic")
 plt.scatter(values[49:63,0], values[49:63,1], marker='.', color='tab:purple', alpha=0.75,  linewidth=0.5, s=50, label="Cl-Ortho")
 plt.axis('equal')
@@ -165,7 +167,8 @@ for cat in ['5_i', '61_i', '262_vi', '230_i', '99_vi']:#, '230_i']:
             line = contents[ii].split()
             data.append([float(line[1]), float(line[2]), float(line[3])])
         #print(data)
-        rc = gd.RipsComplex(points = data, max_edge_length=2)
+        file.close()
+        rc = gd.RipsComplex(points = data, max_edge_length=2.2)
         simplex_tree = rc.create_simplex_tree(max_dimension=2)
         val = list(simplex_tree.get_filtration())
         simplices = set()
@@ -174,6 +177,7 @@ for cat in ['5_i', '61_i', '262_vi', '230_i', '99_vi']:#, '230_i']:
             #if np.sqrt(v[1])*2 <= f:
             simplices.add(tuple(v[0]))
             
+        #print(simplices)
         edges = list(n_faces(simplices,1))
         pts = np.array(data)
         M = np.zeros((len(edges), len(edges)))
@@ -196,8 +200,10 @@ for cat in ['5_i', '61_i', '262_vi', '230_i', '99_vi']:#, '230_i']:
         all_M.append(M)
         print(len(eigval[eigval<=1e-3]))
 
-gnm = GHM(all_eigval, all_eigvec)
+#gnm = GHM(all_eigval, all_eigvec)
 gnm = WM(all_eigval, all_eigvec, all_M)
+
+print(all_eigval)
 
 mat = np.zeros((len(all_eigval), len(all_eigval)))
 for i in range(len(all_eigval)):
@@ -210,6 +216,8 @@ for i in range(len(all_eigval)):
             mat[i, j] = U
 
 mat += np.transpose(np.tril(mat))
+
+print(mat)
 
 """
 plt.figure(dpi=100)
